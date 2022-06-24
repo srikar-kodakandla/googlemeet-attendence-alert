@@ -21,12 +21,13 @@ directory = os.getcwd()
 def alert(msg):
     print(msg)
 
-    bot = telebot.TeleBot("2053253052:AAG4ytvt7ZS8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
+    bot = telebot.TeleBot("20534332530252:AAG4ytvt7ZS8-OsdfdsGgpSsvmdoz-Es-TSOsdfOYyE", parse_mode=None)   ###add your telegram api id and hash id 
 
-    bot.send_message(chat_id='-771935975', text=msg)
-
-    # os.system('play -q -n synth 0.5 sin 880 || echo -e "\a"')
-
+    bot.send_message(chat_id='-77193522975', text=msg)   # add chatid of the channel (you will get message in that channel)
+    try:
+        os.system('play -q -n synth 0.5 sin 880 || echo -e "\a"') ## beep sound during alert
+    except:
+        pass
 
 # setting profile
 
@@ -159,7 +160,7 @@ def meet(link):
             '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[3]/div[3]/div/div/div[3]/span/button/i[1]').click()
 
         alert_list = ['attendence', 'srikar', 'present', 'present sir', 'present mam', 'attendance', 'presence',
-                      'absent', 'absence', 'presence', 'presents']
+                      'absent', 'absence', 'presence', 'presents']  # when ever this words are there in captions then it throws alert 
         doncare=['presence','absent', 'absence', 'presence', 'presents','present']
 
         # alert_list=['contineous','descrete','signals']
@@ -270,11 +271,11 @@ def meet(link):
 
                         if mam > sir:
 
-                            given_attendence_name = '11189A104 present mam'
+                            given_attendence_name = '11189A104 present mam'    #message during attendence for mam
 
                         else:
 
-                            given_attendence_name = '11189A104 present sir'
+                            given_attendence_name = '11189A104 present sir'    #message during attendence for sir
 
                         driver.find_element_by_css_selector(
                             '#ow3 > div.T4LgNb > div > div:nth-child(9) > div.crqnQb > div.R3Gmyc.qwU8Me > div.WUFI9b > div.hWX4r > div > div.BC4V9b > div > div.RpC4Ne.oJeWuf > div.Pc9Gce.Wic03c > textarea').send_keys(
@@ -376,12 +377,12 @@ def login():
                    'https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1' + \
                    '&flowName=GlifWebSignIn&flowEntry = ServiceLogin')
         driver.implicitly_wait(15)
-        driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys('11189A104@kanchiuniv.ac.in')
+        driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys('11189A104@kanchiuniv.ac.in')  ## your school account userid 
         nextButton = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
         nextButton[0].click()
         # driver.find_element_by_xpath('//*[@id="identifierNext"]/div/button/span').click()
         loginBox = driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input')
-        loginBox.send_keys('narayana143!')
+        loginBox.send_keys('password') ### your school account password
 
         # passWordBox = driver.find_element_by_xpath(
         #   '//*[@id ="password"]/div[1]/div / div[1]/input')
@@ -403,7 +404,7 @@ def telegram():
     global limit
     global attendence_alert
     global chatbox
-    bot = telebot.TeleBot("2053253052:AAG4ytvt7ZS8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
+    bot = telebot.TeleBot("205325223052:AAG4ytvt7dfZS8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
     @bot.message_handler(commands=['start', 'help','count','link','leave','screenshot','limit_true','limit_false','stop','chatbox_on','chatbox_off'])
     def send(message):
       global limit
@@ -499,7 +500,11 @@ telegram()
 # driver.find_element_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[3]/div[3]/div/div/div[2]/div/div')
 #meet('https://meet.google.com/bfu-vkom-fem')
 #schedule.every().day.at('09:30').do(login)
-schedule.every().tuesday.at('13:59').do(meet, 'https://meet.google.com/tuk-vpwt-sbv')
+
+
+
+################ day ####### time ############ meet link #############################
+schedule.every().tuesday.at('13:59').do(meet, 'https://meet.google.com/tuk-vpwt-sbv')  #class sheduling 
 schedule.every().monday.at('13:59').do(meet, 'https://meet.google.com/vhx-iyks-shv ')
 schedule.every().wednesday.at('09:59').do(meet, 'https://meet.google.com/vhx-iyks-shv')
 schedule.every().monday.at('09:59').do(meet, 'https://meet.google.com/tuk-vpwt-sbv')
