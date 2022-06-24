@@ -29,8 +29,6 @@ def alert(msg):
     except:
         pass
 
-# setting profile
-
 import background
 background.n=10
 var=0
@@ -43,14 +41,10 @@ relogin=False
 driver=0
 import undetected_chromedriver.v2 as uc
 options = uc.ChromeOptions()
-# options = uc.ChromeOptions()
 options.user_data_dir = directory
-# another way to set profile is the below (which takes precedence if both variants are used
 options.add_argument(f'--user-data-dir={directory}/meetautomation/profile')
-# just some options passing in to skip annoying popups
 options.add_argument('--no-first-run --no-service-autorun --password-store=basic')
 driver = uc.Chrome(options=options)
-#@background.task
 def meet(link):
     global driver
     global directory
@@ -152,7 +146,6 @@ def meet(link):
                 print(error)
                 sleep(5)
                 bbbbb = False
-        # driver.find_element_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[7]/div[1]/div[2]/div/span[1]/span').text
 
         sleep(1)
 
@@ -162,9 +155,6 @@ def meet(link):
         alert_list = ['attendence', 'srikar', 'present', 'present sir', 'present mam', 'attendance', 'presence',
                       'absent', 'absence', 'presence', 'presents']  # when ever this words are there in captions then it throws alert 
         doncare=['presence','absent', 'absence', 'presence', 'presents','present']
-
-        # alert_list=['contineous','descrete','signals']
-
         roll_no_las = list(range(80, 110))
 
         roll_n = list(range(1, 120))
@@ -227,14 +217,6 @@ def meet(link):
                     '#ow3 > div.T4LgNb > div > div:nth-child(9) > div.crqnQb > div.R3Gmyc.qwU8Me > div.WUFI9b > div.hWX4r > div > div.z38b6').text.split(
                     '\n')
 
-                # // *[ @ id = "ow3"] / div[1] / div / div[9] / div[3] / div[4] / div[2] / div[2] / div / div[3]
-
-                # messages = \
-
-                # driver.find_elements_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[4]/div[3]/div[2]/div/div[3]')[
-
-                #    0].text.split('\n')
-
                 check_no = 0
 
                 mam = 0
@@ -291,7 +273,6 @@ def meet(link):
 
             except Exception as error:
                 print(error)
-                #print('unable to fetch messages list bro ')
 
             try:
 
@@ -307,12 +288,10 @@ def meet(link):
 
                 continue
 
-            # print(ele)
 
             for j in alert_list:
                 if j in doncare:
                     if len(ele.split(' '))<10:
-                        # if ele.count(j) > 0:
                         if j in ele.split(' '):
                             print(j)
                             print('alert.......', j)
@@ -321,7 +300,6 @@ def meet(link):
                                 alert(str(ele) + ' : ' + link)
                             sleep(15)
                 if j not in doncare:
-                    # if ele.count(j) > 0:
                     if j in ele.split(' '):
                         print(j)
                         print('alert.......', j)
@@ -329,29 +307,9 @@ def meet(link):
 
                             alert(str(ele) + ' : ' + link)
                         sleep(15)
-                            
-
-            # for k in roll_no:
-
-            #    if ele.count(str(k)) > 0:
-
-            #        called_no.add(k)
-
-            #        print(ele)
-
-            # if len(called_no) > 20:
-
-            #    alert('roll no calling i think ')
-
-            #    for nn in roll_no_last:
-
-            #        if ele.count(str(nn)) > 0:
-
-            #            alert('alert...', nn)
 
             aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
 
-            # driver.find_elements_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[3]/div[3]/div/div/div[2]/div/div')[0].text
 
             members.add(int(driver.find_elements_by_class_name('uGOf1d')[0].text))
 
@@ -360,19 +318,15 @@ def meet(link):
 
                     '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[2]/div/div[7]/span/button')[0].click()
                 alert(f'meet left:{link}')
-                #driver.close()
                 break
 
         except Exception as error:
             print(error)
-            # login()
-            # meet(link)
 
 
 def login():
     global driver
     try:
-        # driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(r'https://accounts.google.com/signin/v2/identifier?continue=' + \
                    'https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1' + \
                    '&flowName=GlifWebSignIn&flowEntry = ServiceLogin')
@@ -380,13 +334,9 @@ def login():
         driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys('11189A104@kanchiuniv.ac.in')  ## your school account userid 
         nextButton = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
         nextButton[0].click()
-        # driver.find_element_by_xpath('//*[@id="identifierNext"]/div/button/span').click()
         loginBox = driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input')
         loginBox.send_keys('password') ### your school account password
 
-        # passWordBox = driver.find_element_by_xpath(
-        #   '//*[@id ="password"]/div[1]/div / div[1]/input')
-        # passWordBox.send_keys(passWord)
 
         nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
         nextButton[0].click()
@@ -397,14 +347,13 @@ def login():
         print('Login Failed')
 
 import background
-#driver.find_elements_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[4]/div[3]/div[2]/div/div[3]/div[1]/div[2]/div[1]')[0].text
 @background.task
 def telegram():
     import telebot
     global limit
     global attendence_alert
     global chatbox
-    bot = telebot.TeleBot("205325223052:AAG4ytvt7dfZS8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
+    bot = telebot.TeleBot("2053252232052:AAG4ytvt7dfZSr8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
     @bot.message_handler(commands=['start', 'help','count','link','leave','screenshot','limit_true','limit_false','stop','chatbox_on','chatbox_off'])
     def send(message):
       global limit
@@ -418,13 +367,8 @@ def telegram():
               bot.reply_to(message,'I am not present in any meeting')
 
       elif message.text=='/start':
-          #try:
-              #aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
-              #bot.reply_to(message,f'I am in the currently in this meeting {driver.current_url}')
           attendence_alert=True
           bot.reply_to(message,'OK i will alert you during attendence')
-          #except:
-          #    bot.reply_to(message,'I am not in any meeting')
       elif message.text=='/help':
           
           jh='''This is a meet automation bot , you will probalby notified for the attendence , this account runs with srikar account (11189A104@kanchiuniv.ac.in) so please do not misuse it 
@@ -486,21 +430,12 @@ def telegram():
             global running
             global relogin
             relogin=True
-            #global driver
             running=False
-            #global lin=var
             print(lin)
             sleep(5)
-            #meet(var)
     bot.polling()
 
 telegram()
-# driver.find_elements_by_class_name('uGOf1d')[0].text
-# meet('https://meet.google.com/vhx-iyks-shv')
-# driver.find_element_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[3]/div[3]/div/div/div[2]/div/div')
-#meet('https://meet.google.com/bfu-vkom-fem')
-#schedule.every().day.at('09:30').do(login)
-
 
 
 ################ day ####### time ############ meet link #############################
@@ -511,7 +446,6 @@ schedule.every().monday.at('09:59').do(meet, 'https://meet.google.com/tuk-vpwt-s
 schedule.every().tuesday.at('09:59').do(meet, 'https://meet.google.com/yzs-dgoa-wdp')
 schedule.every().wednesday.at('13:59').do(meet, 'https://meet.google.com/yzs-dgoa-wdp')
 
-# meet('https://meet.google.com/haf-ftqw-eqc')
 
 while True:
     given_attendence = False
@@ -521,10 +455,5 @@ while True:
     schedule.run_pending()
 
     sleep(6)
-
-# driver.find_elements_by_xpath('//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[4]/div[3]/div[2]/div/div[3]/div[1]/div[2]/div[1]')[0].text
-
-
-
 
 
