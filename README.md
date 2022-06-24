@@ -7,5 +7,6 @@ you can shedule the classes, it auto logins your google account and joins in to 
 
 if you want to join a class then you just need to use telegram bot , give this command in telegram bot "login in to this link http://meet.google.com/XXXX" then it logins your google account and joins meet for you. several usefull commands are implemented in telegram bot to implement all the below tasks : exit all google meets , stop notifications  , stop giving messages in google meet chatbox , start notifications , etc...
 
+Just follow comments in the program and fill in the details then run the program using python
 
-I implemented this program just for fun . Don't skip classes by running this program in your computer because it may hurt your performance in exams.
+I implemented this program just for fun . Don't skip classes by running this program because it may hurt your performance in exams.
