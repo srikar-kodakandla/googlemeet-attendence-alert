@@ -1,19 +1,17 @@
+import background
+from math import *
+import telebot
+import schedule
+from statistics import *
+import re
+from time import sleep
+from num2words import num2words
 import undetected_chromedriver.v2 as uc
 import os
 os.system('rm -r /home/ubuntu/meetautomation/profile')
-os.system('cp -r /home/ubuntu/meetautomation/backup/profile /home/ubuntu/meetautomation')
-from num2words import num2words
-from time import sleep
-import re
-from statistics import *
+os.system(
+    'cp -r /home/ubuntu/meetautomation/backup/profile /home/ubuntu/meetautomation')
 
-from time import sleep
-
-import schedule
-
-import telebot
-
-from math import *
 
 directory = os.getcwd()
 
@@ -21,30 +19,35 @@ directory = os.getcwd()
 def alert(msg):
     print(msg)
 
-    bot = telebot.TeleBot("20534332530252:AAG4ytvt7ZS8-OsdfdsGgpSsvmdoz-Es-TSOsdfOYyE", parse_mode=None)   ###add your telegram api id and hash id 
+    bot = telebot.TeleBot("20534332530252:AAG4ytvt7ZS8-OsdfdsGgpSsvmdoz-Es-TSOsdfOYyE",
+                          parse_mode=None)  # add your telegram api id and hash id
 
-    bot.send_message(chat_id='-77193522975', text=msg)   # add chatid of the channel (you will get message in that channel)
+    # add chatid of the channel (you will get message in that channel)
+    bot.send_message(chat_id='-77193522975', text=msg)
     try:
-        os.system('play -q -n synth 0.5 sin 880 || echo -e "\a"') ## beep sound during alert
+        # beep sound during alert
+        os.system('play -q -n synth 0.5 sin 880 || echo -e "\a"')
     except:
         pass
 
-import background
-background.n=10
-var=0
-lin=0
-running=True
-chatbox=True
-attendence_alert=True
-limit=True
-relogin=False
-driver=0
-import undetected_chromedriver.v2 as uc
+
+background.n = 10
+var = 0
+lin = 0
+running = True
+chatbox = True
+attendence_alert = True
+limit = True
+relogin = False
+driver = 0
 options = uc.ChromeOptions()
 options.user_data_dir = directory
 options.add_argument(f'--user-data-dir={directory}/meetautomation/profile')
-options.add_argument('--no-first-run --no-service-autorun --password-store=basic')
+options.add_argument(
+    '--no-first-run --no-service-autorun --password-store=basic')
 driver = uc.Chrome(options=options)
+
+
 def meet(link):
     global driver
     global directory
@@ -55,9 +58,9 @@ def meet(link):
     global driver
     global var
     global chatbox
-    chatbox=True
-    running=True
-    attendence_alert=True
+    chatbox = True
+    running = True
+    attendence_alert = True
     try:
         login()
     except Exception as error:
@@ -67,9 +70,9 @@ def meet(link):
         print(link)
         global driver
         yyy = driver.get(link)
-        while yyy.count('error')>0:
+        while yyy.count('error') > 0:
             print(link)
-            yyy=driver.get(link)
+            yyy = driver.get(link)
             sleep(2)
             print(yyy)
         sleep(5)
@@ -110,7 +113,7 @@ def meet(link):
                     f'Not enough people entered the meet , waiting ... i need atleast {bbb[0]} people waiting in meet to enter meet')
 
                 sleep(5)
-                if not running :
+                if not running:
                     break
                 if not limit:
                     #global limit
@@ -120,7 +123,6 @@ def meet(link):
             # break
 
         try:
-
 
             driver.find_element_by_xpath(
 
@@ -135,7 +137,7 @@ def meet(link):
 
         while not bbbbb:
             try:
-                if not running :
+                if not running:
                     break
                 driver.find_element_by_xpath(
 
@@ -153,8 +155,9 @@ def meet(link):
             '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[3]/div[3]/div/div/div[3]/span/button/i[1]').click()
 
         alert_list = ['attendence', 'srikar', 'present', 'present sir', 'present mam', 'attendance', 'presence',
-                      'absent', 'absence', 'presence', 'presents']  # when ever this words are there in captions then it throws alert 
-        doncare=['presence','absent', 'absence', 'presence', 'presents','present']
+                      'absent', 'absence', 'presence', 'presents']  # when ever this words are there in captions then it throws alert
+        doncare = ['presence', 'absent', 'absence',
+                   'presence', 'presents', 'present']
         roll_no_las = list(range(80, 110))
 
         roll_n = list(range(1, 120))
@@ -198,20 +201,19 @@ def meet(link):
                 driver.find_elements_by_xpath(
                     '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[2]/div/div[7]/span/button')[0].click()
                 alert(f'meet left:{link}')
-                #driver.close()
+                # driver.close()
                 global relogin
-                if relogin:   
+                if relogin:
                     global lin
                     meet(lin)
                 else:
                     break
-                break    
+                break
             except:
                 driver.get('https://www.google.com')
                 break
         try:
             try:
-
 
                 messages = driver.find_element_by_css_selector(
                     '#ow3 > div.T4LgNb > div > div:nth-child(9) > div.crqnQb > div.R3Gmyc.qwU8Me > div.WUFI9b > div.hWX4r > div > div.z38b6').text.split(
@@ -253,11 +255,13 @@ def meet(link):
 
                         if mam > sir:
 
-                            given_attendence_name = '11189A104 present mam'    #message during attendence for mam
+                            # message during attendence for mam
+                            given_attendence_name = '11189A104 present mam'
 
                         else:
 
-                            given_attendence_name = '11189A104 present sir'    #message during attendence for sir
+                            # message during attendence for sir
+                            given_attendence_name = '11189A104 present sir'
 
                         driver.find_element_by_css_selector(
                             '#ow3 > div.T4LgNb > div > div:nth-child(9) > div.crqnQb > div.R3Gmyc.qwU8Me > div.WUFI9b > div.hWX4r > div > div.BC4V9b > div > div.RpC4Ne.oJeWuf > div.Pc9Gce.Wic03c > textarea').send_keys(
@@ -288,10 +292,9 @@ def meet(link):
 
                 continue
 
-
             for j in alert_list:
                 if j in doncare:
-                    if len(ele.split(' '))<10:
+                    if len(ele.split(' ')) < 10:
                         if j in ele.split(' '):
                             print(j)
                             print('alert.......', j)
@@ -310,8 +313,8 @@ def meet(link):
 
             aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
 
-
-            members.add(int(driver.find_elements_by_class_name('uGOf1d')[0].text))
+            members.add(
+                int(driver.find_elements_by_class_name('uGOf1d')[0].text))
 
             if max(members) / 2 > aa:
                 driver.find_elements_by_xpath(
@@ -327,16 +330,18 @@ def meet(link):
 def login():
     global driver
     try:
-        driver.get(r'https://accounts.google.com/signin/v2/identifier?continue=' + \
-                   'https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1' + \
+        driver.get(r'https://accounts.google.com/signin/v2/identifier?continue=' +
+                   'https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1' +
                    '&flowName=GlifWebSignIn&flowEntry = ServiceLogin')
         driver.implicitly_wait(15)
-        driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys('11189A104@kanchiuniv.ac.in')  ## your school account userid 
-        nextButton = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
+        driver.find_element_by_xpath('//*[@id="identifierId"]').send_keys(
+            '11189A104@kanchiuniv.ac.in')  # your school account userid
+        nextButton = driver.find_elements_by_xpath(
+            '//*[@id ="identifierNext"]')
         nextButton[0].click()
-        loginBox = driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input')
-        loginBox.send_keys('password') ### your school account password
-
+        loginBox = driver.find_element_by_xpath(
+            '//*[@id="password"]/div[1]/div/div[1]/input')
+        loginBox.send_keys('password')  # your school account password
 
         nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
         nextButton[0].click()
@@ -346,32 +351,35 @@ def login():
     except:
         print('Login Failed')
 
-import background
+
 @background.task
 def telegram():
     import telebot
     global limit
     global attendence_alert
     global chatbox
-    bot = telebot.TeleBot("2053252232052:AAG4ytvt7dfZSr8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
-    @bot.message_handler(commands=['start', 'help','count','link','leave','screenshot','limit_true','limit_false','stop','chatbox_on','chatbox_off'])
-    def send(message):
-      global limit
-      global attendence_alert
-      global chatbox
-      if message.text=='/count':
-          try:
-              aa=int(driver.find_elements_by_class_name('uGOf1d')[0].text)
-              bot.reply_to(message,f'{aa} no of people are there in the meeting')
-          except:
-              bot.reply_to(message,'I am not present in any meeting')
+    bot = telebot.TeleBot(
+        "2053252232052:AAG4ytvt7dfZSr8-OGgpSsvmdoz-Es-TSOOYyE", parse_mode=None)
 
-      elif message.text=='/start':
-          attendence_alert=True
-          bot.reply_to(message,'OK i will alert you during attendence')
-      elif message.text=='/help':
-          
-          jh='''This is a meet automation bot , you will probalby notified for the attendence , this account runs with srikar account (11189A104@kanchiuniv.ac.in) so please do not misuse it 
+    @bot.message_handler(commands=['start', 'help', 'count', 'link', 'leave', 'screenshot', 'limit_true', 'limit_false', 'stop', 'chatbox_on', 'chatbox_off'])
+    def send(message):
+        global limit
+        global attendence_alert
+        global chatbox
+        if message.text == '/count':
+            try:
+                aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
+                bot.reply_to(
+                    message, f'{aa} no of people are there in the meeting')
+            except:
+                bot.reply_to(message, 'I am not present in any meeting')
+
+        elif message.text == '/start':
+            attendence_alert = True
+            bot.reply_to(message, 'OK i will alert you during attendence')
+        elif message.text == '/help':
+
+            jh = '''This is a meet automation bot , you will probalby notified for the attendence , this account runs with srikar account (11189A104@kanchiuniv.ac.in) so please do not misuse it 
           because if you misuse it then i will be at risk . if the meet link is wrong then you can modify by some commands but do not change meet link for fun , because it will affect my attendence. 
           help,start,link,leave,screenshot,count are the commands you can use for the bot with the backslash before the command. help means , it will guide about bot , start means , it tells if the bot is in any meeting 
           , link means it says the meeting link currently the bot is logged in , leave means bot will leave the current meeting, do not leave the meeting unless bot is logged in to wrong link because it affects the attendence of mine , screenshot means it takes the screenshot of the current meeting 
@@ -379,80 +387,95 @@ def telegram():
           Do not change the meet link because if the account is already in meeting then it logout from the meeting and enters in to new meeting you enter so it may effect the attendence of that account.limit_true : if you want to wait untill 15 members enter the meet , limit_false if you do not want to wait and want to enter meet immedietly even if no one there in the meet 
           .stop to stop attendence alerts for this meet , chatbox_on for to keep message in chatbox and chatbox_off for to not to keep attendence in chatbox.
           ,start for resume attendence alerts,PLEASE DO NOT TELL OTHERS ABOUT THIS . PLEASE KEEP THIS A SECRET '''
-          bot.reply_to(message,f'i am here to help u \n {jh}')
-      elif message.text=='/link':
-          try:
-              aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
-              bot.reply_to(message,f'I am currently in this meeting : {driver.current_url}')
-          except:
-              bot.reply_to(message,'I am not there in any meet')
+            bot.reply_to(message, f'i am here to help u \n {jh}')
+        elif message.text == '/link':
+            try:
+                aa = int(driver.find_elements_by_class_name('uGOf1d')[0].text)
+                bot.reply_to(
+                    message, f'I am currently in this meeting : {driver.current_url}')
+            except:
+                bot.reply_to(message, 'I am not there in any meet')
 
-      elif message.text=='/leave':
-          global running
-          global relogin
-          relogin=False
-          running=False
-          bot.reply_to(message,'OK leaving meet if i joined any meet')
-      elif message.text=='/screenshot':
-          try:
-              import pyautogui
-              im1 = pyautogui.screenshot()
-              im1.save('u.png')
-              bot.send_photo(message.chat.id,photo=open(os.getcwd()+'/u.png','rb'))
-          except Exception as error:
-              bot.reply_to(message,f'Unable to send screenshot {error}')
-      elif message.text=='/limit_true':
-          #global limit
-          limit=True
-          bot.reply_to(message,'limit is true, it only enters if more than 15 members in the meet')
-      elif message.text=='/limit_false':
-          #global limit
-          limit=False
-          bot.reply_to(message,'limit is false, it will enter meet even if no one is there in the meet ')
-      elif message.text=='/stop':
-          attendence_alert=False
-          bot.reply_to(message,'OK ,stopped attendence alerts for this class') 
-      elif message.text=='/chatbox_off':
-          chatbox=False
-          bot.reply_to(message,'OK i will not post attendence in chatbox for today class')
-      elif message.text=='/chatbox_on':
-          chatbox=True
-          bot.reply_to(message,'OK i will post attendence in chatbox for today class')           
-      else:
-          bot.reply_to(message,'not a valid command')
+        elif message.text == '/leave':
+            global running
+            global relogin
+            relogin = False
+            running = False
+            bot.reply_to(message, 'OK leaving meet if i joined any meet')
+        elif message.text == '/screenshot':
+            try:
+                import pyautogui
+                im1 = pyautogui.screenshot()
+                im1.save('u.png')
+                bot.send_photo(message.chat.id, photo=open(
+                    os.getcwd()+'/u.png', 'rb'))
+            except Exception as error:
+                bot.reply_to(message, f'Unable to send screenshot {error}')
+        elif message.text == '/limit_true':
+            #global limit
+            limit = True
+            bot.reply_to(
+                message, 'limit is true, it only enters if more than 15 members in the meet')
+        elif message.text == '/limit_false':
+            #global limit
+            limit = False
+            bot.reply_to(
+                message, 'limit is false, it will enter meet even if no one is there in the meet ')
+        elif message.text == '/stop':
+            attendence_alert = False
+            bot.reply_to(
+                message, 'OK ,stopped attendence alerts for this class')
+        elif message.text == '/chatbox_off':
+            chatbox = False
+            bot.reply_to(
+                message, 'OK i will not post attendence in chatbox for today class')
+        elif message.text == '/chatbox_on':
+            chatbox = True
+            bot.reply_to(
+                message, 'OK i will post attendence in chatbox for today class')
+        else:
+            bot.reply_to(message, 'not a valid command')
+
     @bot.message_handler()
     def echo_all(message):
         print(message)
         if 'bot change meet link' in message.text:
             global lin
-            lin=list(message.text.split(" "))[4]
-            bot.reply_to(message,"ok  "+message.from_user.first_name+" changes meeet link to {}".format(lin))
+            lin = list(message.text.split(" "))[4]
+            bot.reply_to(message, "ok  "+message.from_user.first_name +
+                         " changes meeet link to {}".format(lin))
             global running
             global relogin
-            relogin=True
-            running=False
+            relogin = True
+            running = False
             print(lin)
             sleep(5)
     bot.polling()
+
 
 telegram()
 
 
 ################ day ####### time ############ meet link #############################
-schedule.every().tuesday.at('13:59').do(meet, 'https://meet.google.com/tuk-vpwt-sbv')  #class sheduling 
-schedule.every().monday.at('13:59').do(meet, 'https://meet.google.com/vhx-iyks-shv ')
-schedule.every().wednesday.at('09:59').do(meet, 'https://meet.google.com/vhx-iyks-shv')
-schedule.every().monday.at('09:59').do(meet, 'https://meet.google.com/tuk-vpwt-sbv')
-schedule.every().tuesday.at('09:59').do(meet, 'https://meet.google.com/yzs-dgoa-wdp')
-schedule.every().wednesday.at('13:59').do(meet, 'https://meet.google.com/yzs-dgoa-wdp')
+schedule.every().tuesday.at('13:59').do(
+    meet, 'https://meet.google.com/tuk-vpwt-sbv')  # class sheduling
+schedule.every().monday.at('13:59').do(
+    meet, 'https://meet.google.com/vhx-iyks-shv ')
+schedule.every().wednesday.at('09:59').do(
+    meet, 'https://meet.google.com/vhx-iyks-shv')
+schedule.every().monday.at('09:59').do(
+    meet, 'https://meet.google.com/tuk-vpwt-sbv')
+schedule.every().tuesday.at('09:59').do(
+    meet, 'https://meet.google.com/yzs-dgoa-wdp')
+schedule.every().wednesday.at('13:59').do(
+    meet, 'https://meet.google.com/yzs-dgoa-wdp')
 
 
 while True:
     given_attendence = False
-    if running==False and relogin==True:
+    if running == False and relogin == True:
         meet(lin)
-    print('waiting for meet link ......')    
+    print('waiting for meet link ......')
     schedule.run_pending()
 
     sleep(6)
-
