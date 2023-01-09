@@ -10,3 +10,5 @@ if you want to join a class then you just need to use telegram bot , give this c
 Just follow comments in the program and fill in the details then run the program using python
 
 I implemented this program just for fun . Don't skip classes by running this program because it may hurt your performance in exams.
+
+If you are a self learner and hates to attend classes and somehow want to get attendence even if you don't listen to class, Then this script is for you!!!
